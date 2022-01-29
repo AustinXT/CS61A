@@ -1,4 +1,6 @@
-HW_SOURCE_FILE=__file__
+from operator import sub, mul
+from math import log, floor
+HW_SOURCE_FILE = __file__
 
 
 def composer(func=lambda x: x):
@@ -21,6 +23,7 @@ def composer(func=lambda x: x):
     """
     def func_adder(g):
         "*** YOUR CODE HERE ***"
+        return composer(lambda x: func(g(x)))
     return func, func_adder
 
 
@@ -43,6 +46,11 @@ def g(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n <= 3:
+        return n
+    else:
+        return g(n - 1) + 2 * g(n - 2) + 3 * g(n - 3)
+
 
 def g_iter(n):
     """Return the value of G(n), computed iteratively.
@@ -63,6 +71,20 @@ def g_iter(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    res = 0
+    if n <= 3:
+        res = n
+    last1 = 3
+    last2 = 2
+    last3 = 1
+    num = 4
+    while num <= n:
+        res = last1 + last2*2 + last3*3
+        last3 = last2
+        last2 = last1
+        last1 = res
+        num += 1
+    return res
 
 
 def missing_digits(n):
@@ -93,6 +115,12 @@ def missing_digits(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    last1 = n % 10
+    new_n = n // 10
+    last2 = new_n % 10
+    return missing_digits(new_n) + (last1-last2-1 if last1-last2 > 1 else 0)
 
 
 def count_change(total):
@@ -112,11 +140,21 @@ def count_change(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(n, m):
+        print(f'Debug: {n} {m}')
+        if n == 0:
+            return 1
+        elif n < (1 << m):
+            return 0
+        else:
+            return helper(n, m + 1) + helper(n - (1 << m), m)
+    return helper(total, 0)
 
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
     print("Move the top disk from rod", origin, "to rod", destination)
+
 
 def move_stack(n, start, end):
     """Print the moves required to move n disks on the start pole to the end
@@ -147,9 +185,14 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
+    if n == 1:
+        print_move(start, end)
+        return
+    mid = 6 - start - end
+    move_stack(n - 1, start, mid)
+    print_move(start, end)
+    move_stack(n - 1, mid, end)
 
-
-from operator import sub, mul
 
 def make_anonymous_factorial():
     """Return the value of an expression that computes factorial.
@@ -161,5 +204,5 @@ def make_anonymous_factorial():
     >>> check(HW_SOURCE_FILE, 'make_anonymous_factorial', ['Assign', 'AugAssign', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
-
+    from functools import reduce
+    return lambda n: reduce(mul, range(1, n + 1))
