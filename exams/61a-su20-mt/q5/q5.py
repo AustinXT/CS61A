@@ -1,5 +1,6 @@
 email = 'example_key'
 
+
 def subsaltshaker(disk):
     """
     A 'saltshaker' is a sequence of digits of length `d` composed entirely of the digit `d`. Examples include
@@ -31,19 +32,20 @@ def subsaltshaker(disk):
     >>> subsaltshaker(20) # no saltshakers in this number
     False
     """
-    current_digit = ______
-    count = ______
-    while ______:
-        last = ______
-        if ______:
+    current_digit = disk % 10
+    count = 0
+    while disk:
+        print('Debug:', disk, current_digit, count)
+        last = current_digit
+        if last == disk % 10:
             count += 1
         else:
-            count = ______
-            ______
-        if ______:
-            ______
-        disk = ______
-    return ______
+            count = 1
+            current_digit = disk % 10
+        if count == current_digit:
+            return True
+        disk = disk//10
+    return False
 
 # ORIGINAL SKELETON FOLLOWS
 

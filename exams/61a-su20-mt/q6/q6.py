@@ -1,5 +1,6 @@
 email = 'example_key'
 
+
 def copycat(lst1, lst2):
     """
     Write a function `copycat` that takes in two lists.
@@ -29,15 +30,15 @@ def copycat(lst1, lst2):
     >>> copycat(['a', 'b', 'c'], [1, -1, 3])
     ['c', 'c', 'c']
     """
-    def copycat_helper(______, ______, ______):
-        if ______:
-            return ______
-        if ______:
-            ______ = ______
+    def copycat_helper(lst1, lst2, list_sofar):
+        if len(lst1) == 0 or len(lst2) == 0:
+            return list_sofar
+        if lst2[0] >= 0:
+            list_sofar.extend(lst1[0]*lst2[0])
         else:
-            ______ = ______[:______]
-        return ______
-    return ______
+            list_sofar = list_sofar[:lst2[0]]
+        return copycat_helper(lst1[1:], lst2[1:], list_sofar)
+    return copycat_helper(lst1, lst2, [])
 
 # ORIGINAL SKELETON FOLLOWS
 

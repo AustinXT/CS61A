@@ -1,5 +1,6 @@
 email = 'example_key'
 
+
 def lemon(xv):
     """
     A lemon-copy is a perfect replica of a nested list's box-and-pointer structure.
@@ -63,16 +64,18 @@ def lemon(xv):
     False
     """
     lemon_lookup = []
+
     def helper(xv):
-        if ______:
-            return ______
-        for old_new in ______:
-            if ______:
+        print('Debug:', xv, lemon_lookup)
+        if isinstance(xv, int):
+            return xv
+        for old_new in lemon_lookup:
+            if old_new[0] is xv:
                 return old_new[1]
         new_xv = []
         lemon_lookup.append((xv, new_xv))
-        for element in ______:
-            ______
+        for element in xv:
+            new_xv.append(helper(element))
         return new_xv
     return helper(xv)
 

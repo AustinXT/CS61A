@@ -15,8 +15,10 @@ It is not necessary to implement `microscope` correctly to get the points for
 implemented `microscope`.
 """
 
+
 def identity_painting(x):
     return identity_painting, x
+
 
 def microscope(a=0, s=1):
     """
@@ -42,8 +44,9 @@ def microscope(a=0, s=1):
     100
     """
     def painting(x):
-        return ______, ______
-    ______
+        return microscope(a=a+s*x, s=-s), a+s*x
+    return painting
+
 
 def plush(painting, items):
     """
@@ -63,10 +66,11 @@ def plush(painting, items):
     >>> plush(identity_painting, [2, 90])
     90
     """
-    painting, x = ______
-    if ______:
-        return ______
-    return ______
+    painting, x = painting(items[0])
+    print('Debug:', x, items)
+    if len(items) > 1:
+        return plush(painting, items[1:])
+    return x
 
 
 # ORIGINAL SKELETON FOLLOWS
@@ -138,4 +142,3 @@ def plush(painting, items):
 #     if ______:
 #         return ______
 #     return ______
-

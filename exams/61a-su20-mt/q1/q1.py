@@ -1,5 +1,6 @@
 email = 'example_key'
 
+
 def cat(password, limit):
     """ Write a higher-order function `cat` that returns a one-argument
     function `attempt`. Every time `attempt` is called, it checks to see if its argument
@@ -27,20 +28,21 @@ def cat(password, limit):
     >>> hacker(2) # correct attempt to gain access
     'Successfully unlocked!'
     """
-    ______
-    ______
+    wrong_try = []
+    right_try = []
+
     def attempt(digit):
-        ______
-        ______
-        if ______:
-            return ______
-        if ______:
-            ______
-            if ______:
-                return ______
+        nonlocal wrong_try
+        nonlocal right_try
+        if len(wrong_try) >= limit:
+            return 'The safe is now inaccessible!'
+        if digit == password[len(right_try)]:
+            right_try.append(digit)
+            if right_try == password:
+                return 'Successfully unlocked!'
         else:
-            ______
-    return ______
+            wrong_try.append(digit)
+    return attempt
 
 # ORIGINAL SKELETON FOLLOWS
 
