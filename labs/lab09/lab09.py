@@ -8,6 +8,14 @@ def convert_link(link):
     []
     """
     "*** YOUR CODE HERE ***"
+    l = []
+    if link == Link.empty:
+        return l
+    while link.rest:
+        l.append(link.first)
+        link = link.rest
+    l.append(link.first)
+    return l
 
 
 def every_other(s):
@@ -28,6 +36,19 @@ def every_other(s):
     Link(4)
     """
     "*** YOUR CODE HERE ***"
+    plink = s
+    if plink == Link.empty or plink.rest == Link.empty:
+        return
+    clink = plink.rest
+    while clink!=Link.empty:
+        print('Debug:', plink, clink)
+        plink.rest = clink.rest
+        plink = clink.rest
+        if clink.rest == Link.empty:
+            plink = Link.empty
+            break
+        clink = plink.rest
+    
 
 
 def label_squarer(t):
@@ -39,6 +60,7 @@ def label_squarer(t):
     Tree(1, [Tree(9, [Tree(25)]), Tree(49)])
     """
     "*** YOUR CODE HERE ***"
+    t.map(lambda x : x*x)
 
 
 def cumulative_mul(t):
@@ -51,8 +73,15 @@ def cumulative_mul(t):
     Tree(105, [Tree(15, [Tree(5)]), Tree(7)])
     """
     "*** YOUR CODE HERE ***"
-
-
+    if t.is_leaf():
+        return
+    base = 1
+    for b in t.branches:
+        cumulative_mul(b)
+        base *= b.label
+    t.label = t.label *base
+    
+    
 def has_cycle(link):
     """Return whether link contains a cycle.
 
@@ -68,6 +97,13 @@ def has_cycle(link):
     False
     """
     "*** YOUR CODE HERE ***"
+    step = link
+    while step.rest:
+        step = step.rest
+        if step.rest is link:
+            return True
+    return False
+            
 
 def has_cycle_constant(link):
     """Return whether link contains a cycle.
@@ -81,6 +117,14 @@ def has_cycle_constant(link):
     False
     """
     "*** YOUR CODE HERE ***"
+    before = [link]
+    step = link
+    while step.rest:
+        step = step.rest
+        for link_before in before:
+            if step.rest is link_before:
+                return True
+    return False
 
 
 def reverse_other(t):
@@ -97,7 +141,14 @@ def reverse_other(t):
     Tree(1, [Tree(8, [Tree(3, [Tree(5), Tree(4)]), Tree(6, [Tree(7)])]), Tree(2)])
     """
     "*** YOUR CODE HERE ***"
-
+    def reverse(bs, level):
+        if level%2==1:
+            length = len(bs)
+            for i in range(length//2):
+                bs[i].label, bs[length-i-1].label = bs[length-i-1].label, bs[i].label
+        for b in bs:
+            reverse(b.branches, level+1)
+    reverse(t.branches, 1)
 
 class Link:
     """A linked list.
