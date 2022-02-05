@@ -51,6 +51,37 @@ class VendingMachine:
     """
     "*** YOUR CODE HERE ***"
 
+    def __init__(self, inventory, price):
+        self.inventory = inventory
+        self.price = price
+        self.stock = 0
+        self.funds = 0
+
+    def add_funds(self, add_funds):
+        if not self.stock:
+            return f'Inventory empty. Restocking required. Here is your ${add_funds}.'
+        self.funds += add_funds
+        return f'Current balance: ${self.funds}'
+
+    def vend(self):
+        if not self.stock:
+            return 'Inventory empty. Restocking required.'
+        if self.funds < self.price:
+            return f'You must add ${self.price-self.funds} more funds.'
+        elif self.funds == self.price:
+            self.funds = 0
+            self.stock -= 1
+            return f'Here is your {self.inventory}.'
+        else:
+            change = self.funds-self.price
+            self.funds = 0
+            self.stock -= 1
+            return f'Here is your {self.inventory} and ${change} change.'
+
+    def restock(self, stock):
+        self.stock += stock
+        return f'Current {self.inventory} stock: {self.stock}'
+
 
 class Mint:
     """A mint creates coins by stamping on years.
@@ -88,9 +119,12 @@ class Mint:
 
     def create(self, kind):
         "*** YOUR CODE HERE ***"
+        return kind(self.year)
 
     def update(self):
         "*** YOUR CODE HERE ***"
+        self.year = Mint.current_year
+
 
 class Coin:
     def __init__(self, year):
@@ -98,9 +132,13 @@ class Coin:
 
     def worth(self):
         "*** YOUR CODE HERE ***"
+        time = Mint.current_year - self.year
+        return self.cents + (0 if time < 50 else time - 50)
+
 
 class Nickel(Coin):
     cents = 5
+
 
 class Dime(Coin):
     cents = 10
@@ -132,6 +170,24 @@ def is_bst(t):
     False
     """
     "*** YOUR CODE HERE ***"
+    def is_sub_bst(t):
+        if t.is_leaf():
+            # print('Debug:', t, True, t.label, t.label)
+            return True, t.label, t.label
+        if len(t.branches) <= 2:
+            lstate = rstate = (True, t.label, t.label)
+            if t.branches[0] and t.branches[0].label <= t.label:
+                lstate = is_sub_bst(t.branches[0])
+            elif t.branches[0] and t.branches[0].label > t.label and len(t.branches) == 1:
+                rstate = is_sub_bst(t.branches[0])
+            if len(t.branches) == 2 and t.branches[1]:
+                rstate = is_sub_bst(t.branches[1])
+            # print('Debug:', t, lstate[0] and rstate and t.label >=
+                #   lstate[2] and t.label <= rstate[1], lstate[1], rstate[2])
+            return lstate[0] and rstate and t.label >= lstate[2] and t.label <= rstate[1], lstate[1], rstate[2]
+        return False, min, max
+
+    return is_sub_bst(t)[0]
 
 
 def store_digits(n):
@@ -150,6 +206,12 @@ def store_digits(n):
     >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     """
     "*** YOUR CODE HERE ***"
+    s = Link(n % 10)
+    n //= 10
+    while n:
+        s = Link(n % 10, s)
+        n //= 10
+    return s
 
 
 def path_yielder(t, value):
@@ -188,14 +250,16 @@ def path_yielder(t, value):
     """
 
     "*** YOUR CODE HERE ***"
-
-    for _______________ in _________________:
-        for _______________ in _________________:
+    if t.label == value:
+        yield [value]
+    for b in t.branches:
+        for path in path_yielder(b, value):
 
             "*** YOUR CODE HERE ***"
+            yield [t.label] + path
 
 
-def remove_all(link , value):
+def remove_all(link, value):
     """Remove all the nodes containing value in link. Assume that the
     first element is never removed.
 
@@ -213,6 +277,12 @@ def remove_all(link , value):
     <0 1>
     """
     "*** YOUR CODE HERE ***"
+    s = link
+    while s.rest:
+        if s.rest.first == value:
+            s.rest = s.rest.rest
+        else:
+            s = s.rest
 
 
 def deep_map(f, link):
@@ -229,6 +299,19 @@ def deep_map(f, link):
     <<2 <4 6> 8> <<10>>>
     """
     "*** YOUR CODE HERE ***"
+    res = Link.empty
+    if link:
+        if link.rest:
+            if isinstance(link.first, Link):
+                res = Link(deep_map(f, link.first), deep_map(f, link.rest))
+            else:
+                res = Link(f(link.first), deep_map(f, link.rest))
+        else:
+            if isinstance(link.first, Link):
+                res = Link(deep_map(f, link.first))
+            else:
+                res = Link(f(link.first))
+    return res
 
 
 class Tree:
@@ -241,6 +324,7 @@ class Tree:
     >>> t.branches[1].is_leaf()
     True
     """
+
     def __init__(self, label, branches=[]):
         for b in branches:
             assert isinstance(b, Tree)
@@ -346,4 +430,3 @@ class Link:
             string += str(self.first) + ' '
             self = self.rest
         return string + str(self.first) + '>'
-
