@@ -1,0 +1,82 @@
+20 7 Xianxian
+[0, 0, 0, 0, 0, 0, 0]
+The 0 begins...
+Xianxian get a sock of 0 dirty value.
+Xianxian wear the sock for a day, and the get 7 more dirty value and becom 7.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7]
+The 1 begins...
+Xianxian get a sock of 7 dirty value.
+Xianxian wear the sock for a day, and the get 6 more dirty value and becom 13.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13]
+The 2 begins...
+Xianxian get a sock of 13 dirty value.
+Xianxian wear the sock for a day, and the get 1 more dirty value and becom 14.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14]
+The 3 begins...
+Xianxian get a sock of 14 dirty value.
+Xianxian wear the sock for a day, and the get 3 more dirty value and becom 17.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17]
+The 4 begins...
+Xianxian get a sock of 17 dirty value.
+Xianxian wear the sock for a day, and the get 7 more dirty value and becom 24.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24]
+The 5 begins...
+Xianxian get a sock of 24 dirty value.
+Xianxian wear the sock for a day, and the get 4 more dirty value and becom 28.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28]
+The 6 begins...
+Xianxian get a sock of 28 dirty value.
+Xianxian wear the sock for a day, and the get 4 more dirty value and becom 32.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32]
+The 7 begins...
+Xianxian get a sock of 32 dirty value.
+Xianxian wear the sock for a day, and the get 9 more dirty value and becom 41.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41]
+The 8 begins...
+Xianxian get a sock of 41 dirty value.
+Xianxian wear the sock for a day, and the get 10 more dirty value and becom 51.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51]
+The 9 begins...
+Xianxian get a sock of 51 dirty value.
+Xianxian wear the sock for a day, and the get 6 more dirty value and becom 57.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51, 57]
+The 10 begins...
+Xianxian get a sock of 57 dirty value.
+Xianxian wear the sock for a day, and the get 6 more dirty value and becom 63.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51, 57, 63]
+The 11 begins...
+Xianxian get a sock of 63 dirty value.
+Xianxian wear the sock for a day, and the get 10 more dirty value and becom 73.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51, 57, 63, 73]
+The 12 begins...
+Xianxian get a sock of 73 dirty value.
+Xianxian wear the sock for a day, and the get 10 more dirty value and becom 83.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51, 57, 63, 73, 83]
+The 13 begins...
+Xianxian get a sock of 83 dirty value.
+Xianxian wear the sock for a day, and the get 10 more dirty value and becom 93.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51, 57, 63, 73, 83, 93]
+The 14 begins...
+Xianxian get a sock of 93 dirty value.
+Xianxian wear the sock for a day, and the get 2 more dirty value and becom 95.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51, 57, 63, 73, 83, 93, 95]
+The 15 begins...
+Xianxian get a sock of 95 dirty value.
+Xianxian wear the sock for a day, and the get 7 more dirty value and becom 102.
+Here this the socks heaps
+[0, 0, 0, 0, 0, 0, 7, 13, 14, 17, 24, 28, 32, 41, 51, 57, 63, 73, 83, 93, 95, 102]
