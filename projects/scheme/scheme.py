@@ -77,7 +77,14 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 7
-    return scheme_eval(expressions.first, env)  # change this line
+    if expressions is nil:
+        return None
+    rest = expressions
+    value = None
+    while rest:
+        value = scheme_eval(rest.first, env)
+        rest = rest.rest
+    return value  # change this line
     # END PROBLEM 7
 
 ################
@@ -130,6 +137,15 @@ class Frame(object):
         """
         # BEGIN PROBLEM 10
         "*** YOUR CODE HERE ***"
+        if len(formals) != len(vals):
+            raise SchemeError(
+                'number of argument values does not match with the number of formal parameters')
+        frame = Frame(self)
+        frest, vrest = formals, vals
+        while frest:
+            frame.define(frest.first, vrest.first)
+            frest, vrest = frest.rest, vrest.rest
+        return frame
         # END PROBLEM 10
 
 ##############
@@ -204,6 +220,8 @@ class LambdaProcedure(Procedure):
         of values, for a lexically-scoped call evaluated in my parent environment."""
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
+        new_env = self.env.make_child_frame(self.formals, args)
+        return new_env
         # END PROBLEM 11
 
     def __str__(self):
@@ -275,8 +293,12 @@ def do_define_form(expressions, env):
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN PROBLEM 9
         "*** YOUR CODE HERE ***"
-        # name = target.first
-
+        name = target.first
+        formals = target.rest
+        validate_formals(formals)
+        body = expressions.rest
+        env.define(name, LambdaProcedure(formals, body, env))
+        return name
         # END PROBLEM 9
     else:
         bad_target = target.first if isinstance(target, Pair) else target
@@ -322,6 +344,8 @@ def do_lambda_form(expressions, env):
     validate_formals(formals)
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    body = expressions.rest
+    return LambdaProcedure(formals, body, env)
     # END PROBLEM 8
 
 
@@ -356,6 +380,14 @@ def do_and_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    expression = expressions
+    value = True
+    while expression:
+        value = scheme_eval(expression.first, env)
+        if value is False:
+            return False
+        expression = expression.rest
+    return value
     # END PROBLEM 12
 
 
@@ -374,6 +406,13 @@ def do_or_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    expression = expressions
+    while expression:
+        value = scheme_eval(expression.first, env)
+        if value is not False:
+            return value
+        expression = expression.rest
+    return False
     # END PROBLEM 12
 
 
@@ -395,8 +434,12 @@ def do_cond_form(expressions, env):
         if is_true_primitive(test):
             # BEGIN PROBLEM 13
             "*** YOUR CODE HERE ***"
+            if clause.rest is nil:
+                return test or True
+            return eval_all(clause.rest, env)
             # END PROBLEM 13
         expressions = expressions.rest
+    return None
 
 
 def do_let_form(expressions, env):
@@ -421,6 +464,13 @@ def make_let_frame(bindings, env):
     names, values = nil, nil
     # BEGIN PROBLEM 14
     "*** YOUR CODE HERE ***"
+    while bindings is not nil:
+        binding = bindings.first
+        validate_form(binding, 2, 2)
+        names = Pair(binding.first, names)
+        values = Pair(scheme_eval(binding.rest.first, env), values)
+        bindings = bindings.rest
+    validate_formals(names)
     # END PROBLEM 14
     return env.make_child_frame(names, values)
 
@@ -552,7 +602,13 @@ class MuProcedure(Procedure):
 
     # BEGIN PROBLEM 15
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 15
+
+    def make_call_frame(self, args, env):
+        """Make a frame that binds my formal parameters to ARGS, a Scheme list
+        of values, for a dynamically-scoped call evaluated in my parent environment."""
+        new_env = env.make_child_frame(self.formals, args)
+        return new_env
+        # END PROBLEM 15
 
     def __str__(self):
         return str(Pair('mu', Pair(self.formals, self.body)))
@@ -569,6 +625,7 @@ def do_mu_form(expressions, env):
     validate_formals(formals)
     # BEGIN PROBLEM 18
     "*** YOUR CODE HERE ***"
+    return MuProcedure(formals, expressions.rest)
     # END PROBLEM 18
 
 
