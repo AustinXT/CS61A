@@ -206,7 +206,6 @@ def read_line(line):
     """Read a single string LINE as a Scheme expression."""
     buf = Buffer(tokenize_lines([line]))
     result = scheme_read(buf)
-    print("Debug:", buf, buf.more_on_line)
     if buf.more_on_line:
         raise SyntaxError(
             "read_line's argument can only be a single element, but received multiple")
